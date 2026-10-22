@@ -660,14 +660,10 @@ extension View {
   @ViewBuilder
   func hideTabBar(_ flag: Bool) -> some View {
     #if !os(macOS)
-      if flag {
-        if #available(iOS 16.0, tvOS 16.0, *) {
-          self.toolbar(.hidden, for: .tabBar)
-        } else {
-          // We fallback to isHidden on UITabBar
-          self
-        }
+      if #available(iOS 16.0, tvOS 16.0, *) {
+        self.toolbar(flag ? .hidden : .automatic, for: .tabBar)
       } else {
+        // We fallback to isHidden on UITabBar
         self
       }
     #else
